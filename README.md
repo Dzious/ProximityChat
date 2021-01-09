@@ -2,19 +2,19 @@
 ___
 
 ### Current Recommended Versions
-* [Latest Release] supports Minecraft 1.*.*.
-* [Latest Pre-Release] supports Minecraft 1.*.*.
+* [Latest Release] supports Minecraft 1.16.*.
+* [Latest Pre-Release] supports Minecraft 1.16.*.
 
 | Minecraft Version | EnchantControl Version |
 |:----:|:----:|
-| MC 1.*.* | Use the [Latest Release]. |
-| MC 1.*.* or under| [Legacy] |
+| MC 1.16.* | Use the [Latest Release]. |
 
 ___
 
 ### Installation/Configuration
 
 #### **Instalation :**
+- Download and install [PlaceholderAPI]
 - Download the jar file form our [Latest Release] or the version corresponding to your **Minecraft Version**
 - Safely shutdown your server
 - Put the jar file in your server `plugins` folder
@@ -26,6 +26,28 @@ ___
 
 ___
 
+### Commands/Permissions
+
+#### **Commands :**
+- /proximitychat \<help\|reload\>
+    - **help** : Prints the help message
+    - **reload** : Reload the plugin
+- /chat \<join\> \<Channel\>
+    - **join** : Join the channel given as argument
+- /\<channel\> [message]
+    - **empty** : switch to the channel
+    - **message** : sends a message in the channel
+
+#### **Permissions :**
+- proximitychat.admin
+    - allow use of /proximitychat commands
+- proximitychat.chat.channel.*
+    - allow player to talk in all channels
+- proximitychat.chat.channel.\<channel\>
+    - allow player to talk in selected \<channel\>
+
+___
+
 ### Support
 
 Here on github's [Issue Tracker] you can file [bug reports] or [feature requests].
@@ -34,10 +56,24 @@ If you still need help or just have a question, join us on the [Discord server],
 
 ___
 
+### Placeholders API
+
+Proximity Chat support placeholders in the prefix configuration.
+
+
+#### **Proximity Chat Placeholders :**
+
+| Placehoder | Description |
+|:----:|:----:|
+| `%proximitychat_channel_name%` | Channel the player talks in. |
+| `%proximitychat_channel_range%` | Range of the channel talks in. |
+| `%proximitychat_channel_worlds%` | Worlds in which the channel is active separated by commas. |
+
+___
 
 [Dzious]: https://github.com/Dzious
 
-[Latest Release]: https://github.com/Dzious/ProximityChat/releases/tag/v0.0.0 
+[Latest Release]: https://github.com/Dzious/ProximityChat/releases/tag/v1.0.0 
 <!-- [Latest Pre-Release] -->
 
 [Issue Tracker]: https://github.com/Dzious/ProximityChat/issues
@@ -45,3 +81,5 @@ ___
 [feature requests]: https://github.com/Dzious/ProximityChat/issues/new?assignees=&labels=enhancement&proximitychat=feature_request.md&title=
 <!-- [general questions] -->
 [Discord server]: https://discord.gg/MNAeetQV4C
+
+[PlaceholderAPI]: https://www.spigotmc.org/resources/placeholderapi.6245/

@@ -1,5 +1,6 @@
 package fr.dzious.bukkit.proximitychat.utils;
 
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import fr.dzious.bukkit.proximitychat.ProximityChat;
@@ -61,7 +62,7 @@ public class ProximityChatPlaceholderExpansion extends PlaceholderExpansion {
      */
     @Override
     public String getVersion(){
-        return "1.0.0";
+        return ProximityChat.INSTANCE.getDescription().getVersion();
     }
   
     /**
@@ -94,22 +95,30 @@ public class ProximityChatPlaceholderExpansion extends PlaceholderExpansion {
                     return ("infinite");
                 else
                     return (Integer.toString(channel.getRange()));
-            case "channel_worlds_raw":
-                for (int i = 0; i < channel.getWorlds().size(); i++) {
-                    placeholder = placeholder + channel.getWorlds().get(i);
-                    if (i < (channel.getWorlds().size() - 1))
+            case "channel_worlds":
+                if (channel.getWorlds().isEmpty()) {
+                    for (int i = 0; i < Bukkit.getWorlds().size(); i++) {
+                        placeholder = placeholder + Bukkit.getWorlds().get(i).getName();
+                        if (i < (channel.getWorlds().size() - 1))
+                            placeholder = placeholder + ", ";
+                    }
+                } else {
+                    for (int i = 0; i < channel.getWorlds().size(); i++) {
+                        placeholder = placeholder + channel.getWorlds().get(i);
+                        if (i < (channel.getWorlds().size() - 1))
                         placeholder = placeholder + ", ";
+                    }
                 }
                 return (placeholder);
-            case "channel_worlds_formated":
-                placeholder = "[";
-                for (int i = 0; i < channel.getWorlds().size(); i++) {
-                    placeholder = placeholder + channel.getWorlds().get(i);
-                    if (i < (channel.getWorlds().size() - 1))
-                        placeholder = placeholder + ", ";
-                }
-                placeholder = placeholder + "]";
-                return (placeholder);
+            // case "channel_worlds_formated":
+            //     placeholder = "[";
+            //     for (int i = 0; i < channel.getWorlds().size(); i++) {
+            //         placeholder = placeholder + channel.getWorlds().get(i);
+            //         if (i < (channel.getWorlds().size() - 1))
+            //             placeholder = placeholder + ", ";
+            //     }
+            //     placeholder = placeholder + "]";
+            //     return (placeholder);
             default:
                 return (null);
         }
