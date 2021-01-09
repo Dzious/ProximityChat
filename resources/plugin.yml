@@ -1,0 +1,52 @@
+#####################################
+#    General Plugin Informations    #
+#####################################
+
+name: ${artifactId}
+
+author: ${organization.name}
+
+version: ${version}
+
+website: ${organization.url}
+
+description: >
+    Proximity Chat is a plugin that aims to create an easy to configure and easy to use ranged chat and channels
+
+api-version: ${plugin.ApiVersion}
+prefix: ${artifactId}
+
+main: ${groupId}.${artifactId}
+depend: [PlaceholderAPI]
+softdepend: [Towny]
+
+
+######################################
+#    Commands Related Information    #
+######################################
+
+commands:
+    ProximityChat:
+        aliases: [pchat, pc]
+        description: This command manage the general settings of the plugin
+        usage: /proximitychat help
+        permission: proximitychat.admin
+    Chat:
+        aliases: []
+        description: This command is use to all chat related settings
+        usage: /chat help
+
+#########################################
+#    Permissions Related Information    #
+#########################################
+
+permissions:
+    proximitychat.admin:
+        description: User is able to use all staff-related commands
+        default: op
+
+    proximitychat.chat.channel.*:
+        description: User is able to use all chat existing channel
+        # By replacing * by te name of a channel, you will grant 
+        # the user the right to talk in a specific channel
+        default: false
