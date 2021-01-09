@@ -1,6 +1,7 @@
 package fr.dzious.bukkit.proximitychat.utils;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.dzious.bukkit.proximitychat.ProximityChat;
@@ -39,6 +40,10 @@ public class Logger {
 
     public void sendMessage(Player p, String msg) {
         p.sendMessage("[" + ChatColor.YELLOW + plugin.getName() + ChatColor.WHITE + "] : "  + msg);
+    }
+
+    public void sendMessage(CommandSender sender, String msg) {
+        sender.sendMessage("[" + ChatColor.YELLOW + plugin.getName() + ChatColor.WHITE + "] : "  + msg);
     }
 
     public void debugConsole(String msg) {

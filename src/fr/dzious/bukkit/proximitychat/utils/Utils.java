@@ -13,8 +13,11 @@ public class Utils {
     public static String concatCommand(String label, String[] args, String delimiter) {
         StringBuilder sb = new StringBuilder();
         sb.append(label);
-        for (String arg : args)
-            sb.append(delimiter + arg);
+        for (int i = 0; i < args.length; i++) {
+            if (i > 0)
+                sb.append(delimiter);
+            sb.append(args[i]);
+        }
         return (sb.toString());
     }
 
@@ -34,7 +37,6 @@ public class Utils {
             Logger.instance.warning("Unable to copy : " + source + " to : " + destination);
             success = false;
         }
-
         return (success);
     }
 }

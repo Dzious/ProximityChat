@@ -21,28 +21,27 @@ public class CommandManager {
         Logger.instance.info("CommandManager OnEnable");
 
         YamlConfiguration config = ProximityChat.configManager;
+        ChatCommand chatCmd = new ChatCommand();
 
-        if (config.contains("chat.enable") && config.getBoolean("chat.enable")) {
-            ChatCommand chatCmd = new ChatCommand();
-            plugin.getCommand("Chat").setExecutor(chatCmd);
-            plugin.getCommand("Chat").setTabCompleter(chatCmd);
+        plugin.getCommand("Chat").setExecutor(chatCmd);
+        plugin.getCommand("Chat").setTabCompleter(chatCmd);
 
-            for (String channel : plugin.getChatManager().getChannels()) {
-                if (config.contains("chat." + channel + ".enable_command") && config.getBoolean("chat." + channel + ".enable_command")) {
-                    plugin.getCommand("Chat").getAliases().add(channel.toLowerCase());
-                }
+        for (String channel : plugin.getChatManager().getChannelsNames()) {
+            Logger.instance.debugConsole("Processing " + channel);
+            if (config.contains("chat." + channel + ".enable_command") && config.getBoolean("chat." + channel + ".enable_command")) {
+                Logger.instance.debugConsole("Requested " + channel + " as a command.");
+                plugin.getCommand("Chat").getAliases().add(channel.toLowerCase());
+                Logger.instance.debugConsole(channel.toLowerCase() + " added.");
             }
-            try {
-                final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-    
-                bukkitCommandMap.setAccessible(true);
-                CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
-    
-                commandMap.register("Chat", plugin.getCommand("Chat"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            
+        }
+        try {
+            final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+
+            bukkitCommandMap.setAccessible(true);
+            ((CommandMap) bukkitCommandMap.get(Bukkit.getServer())).register("Chat", plugin.getCommand("Chat"));
+            bukkitCommandMap.setAccessible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

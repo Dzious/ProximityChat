@@ -18,7 +18,7 @@ prefix: ${artifactId}
 
 main: ${groupId}.${artifactId}
 depend: [PlaceholderAPI]
-softdepend: [Towny]
+softdepend: [Essentials, Towny]
 
 
 ######################################

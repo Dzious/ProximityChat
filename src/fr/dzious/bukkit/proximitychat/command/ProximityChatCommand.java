@@ -20,6 +20,7 @@ public class ProximityChatCommand implements CommandExecutor, TabCompleter {
     
     private final String commandName = "ProximityChat";
     private Map<String, List<String>> tabComplete = new HashMap<>();
+    private static final String helpMessage = "[HELP] ";
     
     public ProximityChatCommand() {
         tabComplete.put(commandName.toLowerCase(), Arrays.asList("reload"));
@@ -35,12 +36,17 @@ public class ProximityChatCommand implements CommandExecutor, TabCompleter {
         if (args.length < 1)
             return (false);
 
-        switch (args[0]) {
+        switch (args[0].toLowerCase()) {
+            case "help":
+                Logger.instance.sendMessage(sender, helpMessage);
             case "reload":
                 ProximityChat.INSTANCE.reload();
+                break;
             default :
                 return (false);
         }
+        return (true);
+
     }
 
     @Override

@@ -1,5 +1,8 @@
 package fr.dzious.bukkit.proximitychat.listener;
 
+import com.earth2me.essentials.Essentials;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,6 +33,9 @@ public class ChatListener implements Listener {
         Player sender = e.getPlayer();
         ChatChannel channel = ProximityChat.INSTANCE.getChatManager().getPlayerChannel(sender.getUniqueId());
         
+        if (isMuted(sender))
+            return;
+
         Logger.instance.debugConsole("Channel : " + channel.getName());
 
         if (!sender.hasPermission("roleplayengine.chat.channel.*") && !sender.hasPermission("roleplayengine.chat.channel." + channel.getName())) {
@@ -46,8 +52,8 @@ public class ChatListener implements Listener {
 
         Logger.instance.debugConsole(e.getFormat());
 
-        e.setFormat("%2$s");
-        e.setMessage(PlaceholderAPI.setPlaceholders(sender, channel.getPrefix()) + e.getMessage()); 
+        e.setFormat(PlaceholderAPI.setPlaceholders(sender, channel.getPrefix()) + "%2$s");
+        // e.setMessage( + e.getMessage()); 
         e.getRecipients().clear();
 
         for (Player p : ProximityChat.INSTANCE.getServer().getOnlinePlayers()) {
@@ -57,8 +63,24 @@ public class ChatListener implements Listener {
                     e.getRecipients().add(p);
                 else if (sender.getLocation().distance(p.getLocation()) <= channel.getRange())
                     e.getRecipients().add(p);
-    
             }
         }
     }
+
+    private boolean isMuted(Player player) {
+        Essentials essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
+
+        if (essentials != null) {
+			try {
+				if (essentials.getUser(player).isMuted()) {
+                    player.sendMessage(ChatColor.RED + "You are currently mute.");
+					return (true);
+				}
+			} catch (Exception e) {
+			}
+			return (false);
+		}
+		return false;
+	}
+
 }

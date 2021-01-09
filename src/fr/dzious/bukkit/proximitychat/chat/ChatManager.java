@@ -77,8 +77,10 @@ public class ChatManager {
         }
     }
 
-    public boolean joinChannel(Player p, String channelName)  {
+    public boolean joinChannel(Player p, String channelName, boolean silent)  {
         
+        channelName = channelName.toLowerCase();
+
         if (!channels.containsKey(channelName)) {
             Logger.instance.sendMessage(p, ChatColor.RED + "This channel does not exists.");
             return (false);
@@ -90,20 +92,26 @@ public class ChatManager {
         }   
         
         if (players.get(p.getUniqueId()).getName().equals(channelName)) {
-            p.sendMessage(ChatColor.GREEN + "You're already in " + ChatColor.BLUE + channelName + ChatColor.GREEN + ".");
+            if (silent == false)
+                p.sendMessage(ChatColor.GREEN + "You're already in " + ChatColor.BLUE + channelName + ChatColor.GREEN + ".");
         } else {
+            if (silent == false)
+                p.sendMessage(ChatColor.GREEN + "You joined the " + ChatColor.BLUE + channelName + ChatColor.GREEN + " channel.");
             players.replace(p.getUniqueId(), channels.get(channelName));
-            p.sendMessage(ChatColor.GREEN + "You joined the " + ChatColor.BLUE + channelName + ChatColor.GREEN + " channel.");
 
         }
         return (true);
     }
 
-    public List<String> getChannels() {
+    public List<String> getChannelsNames() {
         List<String> channelNames = new ArrayList<>();
         for (Map.Entry<String, ChatChannel> channel : channels.entrySet())
             channelNames.add(channel.getValue().getName());
         return (channelNames);
+    }
+
+    public Map<String, ChatChannel> getChannels() {
+        return (channels);
     }
 
     public ChatChannel getPlayerChannel(UUID uuid) {
