@@ -73,7 +73,7 @@ ___
 
 [Dzious]: https://github.com/Dzious
 
-[Latest Release]: https://github.com/Dzious/ProximityChat/releases/tag/v1.0.0 
+[Latest Release]: https://github.com/Dzious/ProximityChat/releases/latest
 <!-- [Latest Pre-Release] -->
 
 [Issue Tracker]: https://github.com/Dzious/ProximityChat/issues
